@@ -60,18 +60,31 @@ class CrudUsuario
     }
 
 
-    public function insertUsuario(Usuario $id_usuario) //cadastrar usuario
+    public function insertUsuario() //cadastrar usuario
     {
 
 
         $this->conexao = DBConnection::getConexao();
-        $dados[] = $id_usuario->getNome();
-        $dados[] = $id_usuario->getApelido();
-        $dados[] = $id_usuario->getCelular();
-        $dados[] = $id_usuario->getDataNasc();
-        $dados[] = $id_usuario->getEmail();
-        $dados[] = $id_usuario->getSenha();
-        $sql = "insert into usuario (nome,email,senha,apelido,celular,data_nasc) values ('')";
+
+
+        $nome= $_POST['nome'];
+        $email= $_POST['email'];
+        $senha= $_POST['senha'];
+        $celular= $_POST['celular'];
+        $apelido= $_POST['apelido'];
+        $data_nasc= $_POST['data_nasc'];
+
+
+        $sql="INSERT INTO usuarios (nome,email,senha,celular,apelido,data_nasc) VALUES ('$nome' , '$email' , '$senha' , '$celular' , '$apelido' , '$data_nasc') ";
+
+
+//        $dados[] = $id_usuario->getNome();
+//        $dados[] = $id_usuario->getApelido();
+//        $dados[] = $id_usuario->getCelular();
+//        $dados[] = $id_usuario->getDataNasc();
+//        $dados[] = $id_usuario->getEmail();
+//        $dados[] = $id_usuario->getSenha();
+//        $sql = "insert into usuarios (nome,email,senha,apelido,celular,data_nasc) values ('')";
         $this->conexao->exec($sql);
 
 

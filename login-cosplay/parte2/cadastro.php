@@ -9,7 +9,7 @@
 
 <div class="form-login">
 
-    <form method="post" action="cadastrando.php">
+    <form method="post" action=".php">
         Nome
         <br />
         <input type="text"     name="nome" placeholder="digite seu nome completo">
