@@ -1,7 +1,17 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: aluno
- * Date: 25/04/18
- * Time: 14:39
- */
+<html>
+
+<head> <title>Usuarios</title></head>
+
+<link rel="stylesheet" href="">
+
+
+<body>
+
+<p>nao consigo ler nada</p>
+
+</body>
+
+
+
+
+

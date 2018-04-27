@@ -15,27 +15,27 @@
             case 'index':
                 echo "VOCE ESCOLHEU INDEX";
                 $crud=new CrudUsuario();
-                $categorias=$crud->getUsuarios();
+                $usuarios=$crud->getUsuarios();
                 echo ('<pre>');
                 //exibir
                 include '../views/templates/cabecalho.php';
-                include '../views/index.php';
+                include '../views/usuarios/index.php';
                 include '../views/templates/rodape.php';
                 break;
 
 
-            case 'inserir':
+            case 'cadastrar':
                 if(!isset($_POST['cadastrar'])) {
                     include '../views/templates/cabecalho.php';
-                    include '../views/inserir.php';
+                    include '../views/usuarios/cadastrar.php';
                     include '../views/templates/rodape.php';
                 }else{
                     //gravar dados digitados no BD
                     $nome = $_POST['nome'];
                     $descricao = $_POST['descricao'];
-                    $novo_usu = new Usuario($email, $nome, $senha,$celular,$apelido,$data_nasc);
+                    $novoUsu = new Usuario($email, $nome, $senha,$celular,$apelido,$data_nasc);
                     $crud = new CrudUsuario();
-                    $crud->insertUsuario();
+                    $crud->insertUsuario($novo_usu);
                     header('Location: usuarios.php');
                 }
                 break;
@@ -46,14 +46,14 @@
                 $crud=new CrudUsuario();
                 $categoria=$crud->getUsuario($id);
                 var_dump($categoria);
-                include '../views/categorias/exibir.php';
+                include '../views/usuarios/exibir.php';
                 break;
 
 
             case 'alterar':
                 if(!isset($_POST['gravar'])) {
                     include '../views/templates/cabecalho.php';
-                    include '../views/inserir.php';
+                    include '../views/usuarios/cadastrar.php';
                     include '../views/templates/rodape.php';
                 }else{
                     //gravar dados digitados no BD

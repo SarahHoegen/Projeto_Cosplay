@@ -113,7 +113,7 @@ class Usuario
     /**
      * @return mixed
      */
-    public function getDataNasc()
+    public function getData()
     {
         return $this->data_nasc;
     }
@@ -121,7 +121,7 @@ class Usuario
     /**
      * @param mixed $data_nasc
      */
-    public function setDataNasc($data_nasc)
+    public function setData($data_nasc)
     {
         $this->data_nasc = $data_nasc;
     }

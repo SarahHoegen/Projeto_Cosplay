@@ -15,19 +15,19 @@ class CrudUsuario
     private $conexao;
 
     //getUsuarios() --retorna uma lista d eobjetos de todas os usuarios
-    public function getUsuario()
+    public function getUsuarios()
     {
         //conexao
         $this->conexao = DBConnection::getConexao();
 
 
-        $sql = 'select * from usuario';
+        $sql = 'select * from usuarios';
 
         $resultado = $this->conexao->query($sql);
 
         $usuarios = $resultado->fetchAll(PDO::FETCH_ASSOC);
 
-        $listaCategorias = [];
+        $listaUsuarios = [];
 
         foreach ($usuarios as $usuario) {
             $listaUsuarios[] = new Usuario($usuario['email'], $usuario['nome'], $usuario['senha'], $usuario['apelido'], $usuario['celular'], $usuario['id_usuario'], $usuario['data_nasc']);
@@ -47,79 +47,93 @@ class CrudUsuario
         $this->conexao = DBConnection::getConexao();
 
         //SELECT - TRAZ TODOS OS DADOS DE CATEGORIA
-        $sql = "select * from usuario where id_usuario =" . $id;
+        $sql = "select * from usuarios where id_usuario =" . $id;
         $resultado = $this->conexao->query($sql);
         //resultset do BD
-        $categoria = $resultado->fetch(PDO::FETCH_ASSOC);
+        $usuario = $resultado->fetch(PDO::FETCH_ASSOC);
 
 
-        $listaUsuarios[] = new Usuario($usuario['email'], $usuario['nome'], $usuario['senha'], $usuario['apelido'], $usuario['celular'], $usuario['id_usuario'], $usuario['data_nasc']);
+        $lista_usuario = new Usuario($usuario['email'], $usuario['nome'], $usuario['senha'], $usuario['apelido'], $usuario['celular'], $usuario['id_usuario'], $usuario['data_nasc']);
 
-        return $listaUsuarios;
+        return $lista_usuario;
 
     }
 
 
-    public function insertUsuario() //cadastrar usuario
+    public function insertUsuario(Usuario $usu) //cadastrar usuario
     {
 
 
         $this->conexao = DBConnection::getConexao();
 
 
-        $nome= $_POST['nome'];
-        $email= $_POST['email'];
-        $senha= $_POST['senha'];
-        $celular= $_POST['celular'];
-        $apelido= $_POST['apelido'];
-        $data_nasc= $_POST['data_nasc'];
+//        $nome= $_POST['nome'];
+//        $email= $_POST['email'];
+//        $senha= $_POST['senha'];
+//        $celular= $_POST['celular'];
+//        $apelido= $_POST['apelido'];
+//        $data_nasc= $_POST['data_nasc'];
+//
+///
+        $dados[] = $usu->getNome();
+        $dados[] = $usu->getApelido();
+        $dados[] = $usu->getCelular();
+        $dados[] = $usu->getData();
+        $dados[] = $usu->getEmail();
+        $dados[] = $usu->getSenha();
 
 
-        $sql="INSERT INTO usuarios (nome,email,senha,celular,apelido,data_nasc) VALUES ('$nome' , '$email' , '$senha' , '$celular' , '$apelido' , '$data_nasc') ";
+        $sql = "INSERT INTO usuarios (nome,email,senha,celular,apelido,data_nasc) VALUES ('$dados[0]' , '$dados[1]' , '$dados[2]' , '$dados[3]' , '$dados[4]' , '$dados[5]') ";
 
 
-//        $dados[] = $id_usuario->getNome();
-//        $dados[] = $id_usuario->getApelido();
-//        $dados[] = $id_usuario->getCelular();
-//        $dados[] = $id_usuario->getDataNasc();
-//        $dados[] = $id_usuario->getEmail();
-//        $dados[] = $id_usuario->getSenha();
-//        $sql = "insert into usuarios (nome,email,senha,apelido,celular,data_nasc) values ('')";
         $this->conexao->exec($sql);
 
 
     }
 
-//
-//    public function updateUsuario(Usuario $id_usuario)
-//    {
-//
-//        $this->conexao = DBConnection::getConexao();
-//        $nome = $id->getNome();
-//        $email= $email->getEmail();
-//
-//
-//        $sql = "update usuario set nome= '$nome',email='$email',senha='$senha',apelido='$apelido',celular='$celular',data_nasc='$data_nasc' where id_usuario='$id_usuario'";
-//        $this->conexao->exec($sql);
-//
-//
-//    }
-
-
-    public function deleteUsuario($id_usuario) //excluir conta
+    public function updateCategoria(Usuario $usu)
     {
 
         $this->conexao = DBConnection::getConexao();
-        $sql = "delete from usuario where id_usuario=" . $id_usuario;
-        $this->conexao->exec($sql);
+        $id_usuario = $usu->getId();
+        $nome = $usu->getNome();
+        $email = $usu->getEmail();
+        $senha = $usu->getSenha();
+        $celular = $usu->getCelular();
+        $apelido = $usu->getApelido();
+        $data_nasc = $usu->getData();
 
+        $sql = "update categoria set nome= '$nome',email='$email',senha='$senha',celular='$celular',apelido='$apelido',data_nasc=$data_nasc where id_usuario =$id_usuario";
+        try {
+            $res = $this->conexao->exec($sql);
+            return $res;
+        } catch (PDOException $erro) {
+            return $erro->getMessage();
+
+        }
+
+
+    }
+
+
+    public function deleteUsuario($id_categoria)
+    {
+
+        $this->conexao = DBConnection::getConexao();
+        $sql = "delete from usuarios where id_usuario=" . $id_usuario;
+        echo $sql;
+        try {
+            $res = $this->conexao->exec($sql);
+            return $res;
+        } catch (PDOException $erro) {
+            return $erro->getMessage();
+
+        }
     }
 }
-
 ////$novacat= new Categoria(null,'alpaca','são fofas');
 //$crud = new CrudUsuario();
 ////$crud->insertCategoria($novacat);
 //$crud->deleteUsuario(9);
 //
 
-}
